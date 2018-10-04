@@ -30,27 +30,33 @@ namespace undergraduate_practice
 
         bool CheckForErrors()
         {
-            if (Validation.GetHasError(PhiX))
+            if (Validation.GetHasError(F1X))
+            {
+                return true;
+            }
+            
+            if (Validation.GetHasError(F2X))
             {
                 return true;
             }
 
-            if (Validation.GetHasError(PsiX))
+            if (Validation.GetHasError(P1T))
             {
                 return true;
             }
 
-            if (Validation.GetHasError(FX))
+
+            if (Validation.GetHasError(P2T))
             {
                 return true;
             }
 
-            if (Validation.GetHasError(PT))
+            if (Validation.GetHasError(x1))
             {
                 return true;
             }
 
-            if (Validation.GetHasError(x0))
+            if (Validation.GetHasError(x2))
             {
                 return true;
             }
@@ -79,25 +85,16 @@ namespace undergraduate_practice
 
         private void CountButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = (InverseProblem)this.FindResource("InverseProblem1");
-            //task.PhiInpit = PhiX.Text;
-            //task.PsiInpit = PsiX.Text;
-            //task.FInpit = FX.Text;
-            //task.PInpit = PT.Text;
-            //task.X0 = double.Parse(x0.Text);
-            //task.A = double.Parse(a.Text);
-            //task.T0 = double.Parse(t0.Text);
-            //task.T1 = double.Parse(t1.Text);
-            //task.GridSpacing = double.Parse(GridSpace.Text);
-            if (CheckForErrors() == false)
-            {
-                //MessageBox.Show("Solving");
-                List<double> g;
-                double[] t;
-                task.Solve(out g, out t);
-                var Model = (MainViewModel)this.DataContext;
-                Model.UpdateModel(g, t);
-            }
+            //var task = (InverseProblem)this.FindResource("InverseProblem1");
+            //if (CheckForErrors() == false)
+            //{
+            //    //MessageBox.Show("Solving");
+            //    List<double> g;
+            //    double[] t;
+            //    task.Solve(out g, out t);
+            //    var Model = (MainViewModel)this.DataContext;
+            //    Model.UpdateModel(g, t);
+            //}
         }
     }
 }
