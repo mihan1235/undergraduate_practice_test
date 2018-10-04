@@ -7,7 +7,6 @@ using OxyPlot;
 using OxyPlot.Series;
 using System.Windows;
 using System.ComponentModel;
-//using Volter2;
 
 namespace undergraduate_practice
 {
@@ -16,18 +15,22 @@ namespace undergraduate_practice
     {
         public MainViewModel(){ }
 
-        public void UpdateModel(List<double> g, double[] t)
+        void AddLineSeries(List<double> func_arr, string func_title, double[] t)
+        {
+            LineSeries LineSeries = new LineSeries();
+            for (int i = 0; i < func_arr.Count; i++)
+            {
+                LineSeries.Points.Add(new DataPoint(t[i], func_arr.ElementAt(i)));
+            }
+            LineSeries.Title = func_title;
+            this.MyModel.Series.Add(LineSeries);
+        }
+
+        public void UpdateModel(List<double> g1, List<double> g2,  double[] t)
         {
             this.MyModel = new PlotModel { Title = "Inverse Problem" };
-            
-
-            LineSeries LineSeries1 = new LineSeries();
-            for(int i =0; i<g.Count;i++)
-            {
-                LineSeries1.Points.Add(new DataPoint(t[i], g.ElementAt(i)));
-            }
-            LineSeries1.Title = "g(t)";
-            this.MyModel.Series.Add(LineSeries1);
+            AddLineSeries(g1, "g1(t)", t);
+            AddLineSeries(g2, "g2(t)", t);
             OnPropertyChanged("MyModel");
         }
 

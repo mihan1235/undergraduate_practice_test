@@ -257,14 +257,14 @@ namespace Problem
 
         Volter2System task = new Volter2System();
 
-        //public void Solve(out List<double> g, out double[] t_arr)
-        //{
-        //    //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
-        //    volter_int.F = (t) => p_2(t) / F(X0);
-        //    volter_int.Lambda = 1 / 2 * F(X0);
-        //    volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
-        //                   - FirstDerivative(F, X0 - A * (t - tau), h) * A;
-        //    volter_int.Solve(out g, out t_arr);
-        //}
-    }        
+        public void Solve(out List<double> g1, out List<double> g2 out double[] t_arr)
+        {
+            //    //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
+            //    volter_int.F = (t) => p_2(t) / F(X0);
+            //    volter_int.Lambda = 1 / 2 * F(X0);
+            //    volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
+            //                   - FirstDerivative(F, X0 - A * (t - tau), h) * A;
+            //    volter_int.Solve(out g, out t_arr);
+            //}
+        }        
 }

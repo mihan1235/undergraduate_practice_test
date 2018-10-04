@@ -85,16 +85,15 @@ namespace undergraduate_practice
 
         private void CountButton_Click(object sender, RoutedEventArgs e)
         {
-            //var task = (InverseProblem)this.FindResource("InverseProblem1");
-            //if (CheckForErrors() == false)
-            //{
-            //    //MessageBox.Show("Solving");
-            //    List<double> g;
-            //    double[] t;
-            //    task.Solve(out g, out t);
-            //    var Model = (MainViewModel)this.DataContext;
-            //    Model.UpdateModel(g, t);
-            //}
+            var task = (InverseProblem)this.FindResource("InverseProblem");
+            if (CheckForErrors() == false)
+            {
+                //    //MessageBox.Show("Solving");
+                double[] t;
+                task.Solve(out List<double> g1, out List<double> g2, out t);
+                var Model = (MainViewModel)this.DataContext;
+                Model.UpdateModel(g1,g2, t);
+            }
         }
     }
 }
