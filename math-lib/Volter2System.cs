@@ -16,7 +16,7 @@ namespace math_lib
      * \end{aligned}
      * \right.
      * 
-     * K_{11}, K_{22}, K_{21}, K{22} are given.
+     * K_{11}, K_{22}, K_{21}, K{22}, \phi_1, \phi_2 are given.
      * 
      * we need to find g_1(t),g_2(t)
      * 
@@ -46,7 +46,127 @@ namespace math_lib
      * \right.
      */
 
-    class Volter2System
+    public class Volter2System
     {
+        double h = 0.02f;
+        public double GridSpacing
+        {
+            get
+            {
+                return h;
+            }
+            set
+            {
+                h = value;
+            }
+        }
+        double a = 2.0f;
+        double b = 3.0f;
+        public void SetTimeRange(double a, double b)
+        {
+            this.a = a;
+            this.b = b;
+        }
+
+        public function2 K11
+        {
+            get;
+            set;
+        }
+
+        public function2 K12
+        {
+            get;
+            set;
+        }
+
+        public function2 K21
+        {
+            get;
+            set;
+        }
+
+        public function2 K22
+        {
+            get;
+            set;
+        }
+
+        public function1 Phi1
+        {
+            get;
+            set;
+        }
+
+        public function1 Phi2
+        {
+            get;
+            set;
+        }
+
+
+        int num;
+
+        double[] Make_t_Array()
+        {
+            double[] t = new double[(int)((b - a) / h + 1)];
+            //Console.WriteLine(a);
+            //Console.WriteLine(b);
+            num = (int)((b - a) / h + 1);
+            //Console.WriteLine(num);
+            double tmp = a;
+            for (int i = 0; i < num; i = i + 1)
+            {
+
+                t[i] = tmp;
+                tmp += h;
+            }
+            return t;
+        }
+
+        public void Solve(out List<double> g_1, out List<double> g_2, out double[] t)
+        {
+            t = Make_t_Array();
+            g_1 = new List<double>();
+            g_2 = new List<double>();
+
+            g_1.Add(Phi1(t[0]));
+            g_2.Add(Phi2(t[0]));
+
+            for (int i=1; i< num; i=i+1)
+            {
+                double sum_11 = 0;
+
+                for (int k = 0; k < i - 1; k = k + 1)
+                {
+                    sum_11 = sum_11 + K11(t[i], t[k]) * g_1.ElementAt(k) * h;
+                }
+
+                double sum_12 = 0;
+
+                for (int k = 0; k < i - 1; k++) 
+                {
+                    sum_12 = sum_12 + K12(t[i], t[k]) * g_2.ElementAt(k) * h;
+                }
+
+                g_1.Add(sum_11+sum_12+Phi1(t[i]));
+
+                double sum_21 = 0;
+
+                for (int k = 0; k < i - 1; k++)
+                {
+                    sum_21 += K21(t[i], t[k]) * g_1.ElementAt(k) * h;
+                }
+
+                double sum_22 = 0;
+
+                for (int k = 0; k < i - 1; k++) 
+                {
+                    sum_22 += K22(t[i], t[k]) * g_2.ElementAt(k) * h;
+                }
+
+                g_2.Add(sum_21 + sum_22 + Phi2(t[i]));
+            }
+        }
     }
 }

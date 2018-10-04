@@ -9,6 +9,9 @@ namespace math_lib
     /*
      * g(t) + \lambda \int_0^t K(t-\tau)g(\tau) d \tau = F(\tau)
      */
+    public delegate double function1(double op1);
+    public delegate double function2(double op1, double op2);
+
     public class VolterII
     {
         double h = 0.02f;
@@ -31,7 +34,7 @@ namespace math_lib
             this.b = b;
         }
 
-        public delegate double function2(double op1, double op2);
+        
         public function2 K
         {
             get; set;
@@ -42,7 +45,6 @@ namespace math_lib
         //    return Math.Exp(t - tau);
         //}
 
-        public delegate double function1(double op1);
         public function1 F
         {
             get; set;
