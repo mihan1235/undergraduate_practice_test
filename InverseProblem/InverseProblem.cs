@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace Problem
 {
-    public class InverseProblem: IDataErrorInfo
+    public class InverseProblem : IDataErrorInfo
     {
         public string Error { get { return "Error Text"; } }
         public string this[string property]
@@ -32,9 +32,9 @@ namespace Problem
                             msg = added_msg;
                         }
                     }
-                    
+
                 }
-                
+
                 switch (property)
                 {
                     case "T0":
@@ -45,7 +45,7 @@ namespace Problem
                         if (T0 < 0)
                         {
                             add_msg("t0 must be positive");
-                        }   
+                        }
                         break;
                     case "T1":
                         if (T1 < 0)
@@ -118,7 +118,7 @@ namespace Problem
             }
         }
 
-        double h=0.01;
+        double h = 0.01;
         public double GridSpacing
         {
             get
@@ -144,7 +144,7 @@ namespace Problem
             set
             {
                 t0 = value;
-                task.SetTimeRange(t0, t1);                
+                task.SetTimeRange(t0, t1);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Problem
             set
             {
                 t1 = value;
-                task.SetTimeRange(t0, t1);                
+                task.SetTimeRange(t0, t1);
             }
         }
 
@@ -257,7 +257,7 @@ namespace Problem
 
         Volter2System task = new Volter2System();
 
-        public void Solve(out List<double> g1, out List<double> g2 out double[] t_arr)
+        public void Solve(out List<double> g1, out List<double> g2, out double[] t_arr)
         {
             //    //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
             //    volter_int.F = (t) => p_2(t) / F(X0);
@@ -265,6 +265,69 @@ namespace Problem
             //    volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
             //                   - FirstDerivative(F, X0 - A * (t - tau), h) * A;
             //    volter_int.Solve(out g, out t_arr);
-            //}
-        }        
+            double q1(double t)
+            {
+                return SecondDerivative(P2,t,h) - F2(X2)/F2(X1) * SecondDerivative(P1,t,h);
+            }
+
+            double C1()
+            {
+                return F1(X2) - F2(X2) / F2(X1) * F1(X1);
+            }
+            
+            double A(double x, double t, double tau)
+            {
+                return SecondDerivative(F1, x + this.A * (t - tau), h) - SecondDerivative(F1, x - this.A *
+                    (t - tau), h);
+            }
+
+            double B(double x, double t, double tau)
+            {
+                return SecondDerivative(F2, x + this.A * (t - tau), h) - SecondDerivative(F2, x - this.A *
+                    (t - tau), h);
+            }
+
+            double C2()
+            {
+                return F2(X1) - F2(X2) / F1(X2) * F1(X1);
+            }
+
+            double q2(double t)
+            {
+                return SecondDerivative(P1, t, h) - F1(X1) / F1(X2) * SecondDerivative(P2, t, h);
+            }
+
+            task.Phi1 = (t) =>
+            {
+                return q1(t) / C1();
+            };
+
+
+            task.K11 = (t, tau) =>
+            {
+                return this.A / (2 * C1()) * (A(X1,t,tau)*F2(X2)/F2(X1)-A(X2,t,tau));
+            };
+
+            task.K12 = (t, tau) =>
+            {
+                return this.A / (2 * C1()) * (B(X1, t, tau) * F2(X2) / F2(X1) - B(X2, t, tau));
+            };
+
+            task.Phi2 = (t) =>
+            {
+                return q2(t) / C2();
+            };
+
+            task.K21 = (t, tau) =>
+            {
+                return this.A / (2 * C2()) * (A(X2, t, tau) * F1(X1) / F1(X2) - A(X1, t, tau));
+            };
+
+            task.K22 = (t, tau) =>
+            {
+                return this.A / (2 * C2()) * (B(X2, t, tau) * F1(X1) / F1(X2) - B(X1, t, tau));
+            };
+            task.Solve(out g1,out g2,out t_arr);
+        }
+    }
 }
