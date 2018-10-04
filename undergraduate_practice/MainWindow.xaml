@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:undergraduate_practice"
         xmlns:oxy="http://oxyplot.org/wpf"
-        xmlns:lib="clr-namespace:InverseProblem;assembly=InverseProblem"
+        xmlns:lib="clr-namespace:Problem;assembly=Problem"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <lib:InverseProblem1 x:Key="InverseProblem1"></lib:InverseProblem1>
+        <lib:InverseProblem x:Key="InverseProblem"></lib:InverseProblem>
         <Style TargetType="Label" x:Key="ErrorGridSpaceStyle">
             <Setter Property="Visibility" Value="Visible"/>
             <Setter Property="Content" Value="{Binding ElementName=GridSpaceText, Path=(Validation.Errors)[0].ErrorContent}"/>
@@ -57,249 +57,249 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Label" x:Key="ErrorX0Style">
+        <Style TargetType="Label" x:Key="ErrorX1Style">
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Content" Value="{Binding ElementName=x0, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Content" Value="{Binding ElementName=x1, Path=(Validation.Errors)[0].ErrorContent}"/>
             <Setter Property="Foreground" Value="Red"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=x0, Path=(Validation.Errors)[0].ErrorContent}"
+                <DataTrigger Binding="{Binding ElementName=x1, Path=(Validation.Errors)[0].ErrorContent}"
                         Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Label" x:Key="ErrorPhiXStyle">
+        <Style TargetType="Label" x:Key="ErrorX2Style">
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Content" Value="{Binding ElementName=PhiX, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Content" Value="{Binding ElementName=x2, Path=(Validation.Errors)[0].ErrorContent}"/>
             <Setter Property="Foreground" Value="Red"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=PhiX, Path=(Validation.Errors)[0].ErrorContent}"
+                <DataTrigger Binding="{Binding ElementName=x2, Path=(Validation.Errors)[0].ErrorContent}"
                         Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Label" x:Key="ErrorPsiXStyle">
+        <Style TargetType="Label" x:Key="ErrorF1XStyle">
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Content" Value="{Binding ElementName=PsiX, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Content" Value="{Binding ElementName=F1X, Path=(Validation.Errors)[0].ErrorContent}"/>
             <Setter Property="Foreground" Value="Red"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=PsiX, Path=(Validation.Errors)[0].ErrorContent}"
+                <DataTrigger Binding="{Binding ElementName=F1X, Path=(Validation.Errors)[0].ErrorContent}"
                         Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Label" x:Key="ErrorFXStyle">
+        <Style TargetType="Label" x:Key="ErrorF2XStyle">
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Content" Value="{Binding ElementName=FX, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Content" Value="{Binding ElementName=F2X, Path=(Validation.Errors)[0].ErrorContent}"/>
             <Setter Property="Foreground" Value="Red"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=FX, Path=(Validation.Errors)[0].ErrorContent}"
+                <DataTrigger Binding="{Binding ElementName=F2X, Path=(Validation.Errors)[0].ErrorContent}"
                         Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Label" x:Key="ErrorPTStyle">
+        <Style TargetType="Label" x:Key="ErrorP1TStyle">
             <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Content" Value="{Binding ElementName=PT, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Content" Value="{Binding ElementName=P1T, Path=(Validation.Errors)[0].ErrorContent}"/>
             <Setter Property="Foreground" Value="Red"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=PT, Path=(Validation.Errors)[0].ErrorContent}"
+                <DataTrigger Binding="{Binding ElementName=P1T, Path=(Validation.Errors)[0].ErrorContent}"
+                        Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Label" x:Key="ErrorP2TStyle">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Content" Value="{Binding ElementName=P2T, Path=(Validation.Errors)[0].ErrorContent}"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=P2T, Path=(Validation.Errors)[0].ErrorContent}"
                         Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <TabControl x:Name="Problems">
-        <TabItem x:Name="InverseProblem1">
-            <TabItem.Header>
-                <TextBlock Margin="3">InverseProblem1</TextBlock>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="200"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <oxy:PlotView Grid.Column="0"  Model="{Binding MyModel}"/>
-                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <oxy:PlotView Grid.Column="0"  Model="{Binding MyModel}"/>
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" 
                       HorizontalAlignment="Center" Width="5"></GridSplitter>
-                    <Grid Grid.Column="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                            <StackPanel Grid.Row="0" VerticalAlignment="Stretch" >
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Grid.Row="0" VerticalAlignment="Stretch" >
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                                    <DockPanel Margin="2">
-                                        <Label Content="&#966;(x):"></Label>
-                                        <TextBox Name ="PhiX" MinWidth="200">
-                                            <TextBox.Text>
-                                                <Binding Source="{StaticResource InverseProblem1}"
-                                         Path="PhiInpit">
-                                                    <Binding.ValidationRules>
-                                                        <DataErrorValidationRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" Foreground="Red"
-                           Style="{StaticResource ErrorPhiXStyle}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
-                    CornerRadius="4" MinWidth="200" HorizontalAlignment="Left">
-                                    <DockPanel Margin="2">
-                                        <Label Content="&#968;(x):"></Label>
-                                        <TextBox Name="PsiX" MinWidth="200">
-                                            <Binding Source="{StaticResource InverseProblem1}"
-                                         Path="PsiInpit">
-                                                <Binding.ValidationRules>
-                                                    <DataErrorValidationRule />
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" Foreground="Red"
-                           Style="{StaticResource ErrorPsiXStyle}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                        <DockPanel Margin="2">
+                            <Label Content="f1(x):"></Label>
+                            <TextBox Name="F1X" MinWidth="200">
+                                <Binding Source="{StaticResource InverseProblem}"
+                                         Path="F1Inpit">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                           Style="{StaticResource ErrorF1XStyle}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                                    <DockPanel Margin="2">
-                                        <Label Content="f(x):"></Label>
-                                        <TextBox Name="FX" MinWidth="200">
-                                            <Binding Source="{StaticResource InverseProblem1}"
-                                         Path="FInpit">
-                                                <Binding.ValidationRules>
-                                                    <DataErrorValidationRule />
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" Foreground="Red"
-                           Style="{StaticResource ErrorFXStyle}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                        <DockPanel Margin="2">
+                            <Label Content="f2(x):"></Label>
+                            <TextBox Name="F2X" MinWidth="200">
+                                <Binding Source="{StaticResource InverseProblem}"
+                                         Path="F2Inpit">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                           Style="{StaticResource ErrorF2XStyle}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                                    <DockPanel Margin="2">
-                                        <Label Content="U(x_0,t) = p(t):"></Label>
-                                        <TextBox Name="PT" MinWidth="200">
-                                            <Binding Source="{StaticResource InverseProblem1}"
-                                         Path="PInpit">
-                                                <Binding.ValidationRules>
-                                                    <DataErrorValidationRule />
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" Foreground="Red"
-                           Style="{StaticResource ErrorPTStyle}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                        <DockPanel Margin="2">
+                            <Label Content="U(x_1,t) = p1(t):"></Label>
+                            <TextBox Name="P1T" MinWidth="200">
+                                <Binding Source="{StaticResource InverseProblem}"
+                                         Path="P1Inpit">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                           Style="{StaticResource ErrorP1TStyle}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                    CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
+                        <DockPanel Margin="2">
+                            <Label Content="U(x_2,t) = p2(t):"></Label>
+                            <TextBox Name="P2T" MinWidth="200">
+                                <Binding Source="{StaticResource InverseProblem}"
+                                         Path="P2Inpit">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                           Style="{StaticResource ErrorP2TStyle}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
-                                    <DockPanel Margin="2" >
-                                        <Label Content="x_0:"></Label>
-                                        <TextBox Name ="x0" MinWidth="30"
-                                 Text="{Binding Source={StaticResource InverseProblem1},Path=X0}"></TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" Foreground="Red"
-                       Style="{StaticResource ErrorX0Style}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                        <DockPanel Margin="2" >
+                            <Label Content="x_1:"></Label>
+                            <TextBox Name ="x1" MinWidth="30"
+                                 Text="{Binding Source={StaticResource InverseProblem},Path=X1}"></TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                       Style="{StaticResource ErrorX1Style}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
-                                    <DockPanel Margin="2" >
-                                        <Label Content="a:"></Label>
-                                        <TextBox Name ="a" MinWidth="30"
-                                 Text="{Binding Source={StaticResource InverseProblem1},Path=A}"></TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" 
+                        <DockPanel Margin="2" >
+                            <Label Content="x_2:"></Label>
+                            <TextBox Name ="x2" MinWidth="30"
+                                 Text="{Binding Source={StaticResource InverseProblem},Path=X2}"></TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" Foreground="Red"
+                       Style="{StaticResource ErrorX2Style}"></Label>
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                    CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
+                        <DockPanel Margin="2" >
+                            <Label Content="a:"></Label>
+                            <TextBox Name ="a" MinWidth="30"
+                                 Text="{Binding Source={StaticResource InverseProblem},Path=A}"></TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorAStyle}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="100" HorizontalAlignment="Left" >
-                                    <DockPanel Margin="2" Name="DockPanelTime">
-                                        <Label Content="t: from"></Label>
-                                        <TextBox Name="t0" MinWidth="50">
-                                            <TextBox.Text>
-                                                <Binding Source="{StaticResource InverseProblem1}"
+                        <DockPanel Margin="2" Name="DockPanelTime">
+                            <Label Content="t: from"></Label>
+                            <TextBox Name="t0" MinWidth="50">
+                                <TextBox.Text>
+                                    <Binding Source="{StaticResource InverseProblem}"
                                          Path="T0">
-                                                    <Binding.ValidationRules>
-                                                        <DataErrorValidationRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-                                        <Label Content="t: to"></Label>
-                                        <TextBox Name="t1" MinWidth="50">
-                                            <TextBox.Text>
-                                                <Binding Source="{StaticResource InverseProblem1}"
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <Label Content="t: to"></Label>
+                            <TextBox Name="t1" MinWidth="50">
+                                <TextBox.Text>
+                                    <Binding Source="{StaticResource InverseProblem}"
                                          Path="T1">
-                                                    <Binding.ValidationRules>
-                                                        <DataErrorValidationRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-                                    </DockPanel>
-                                </Border>
-                                <Label Margin="2" 
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+                    </Border>
+                    <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorT0Style}"></Label>
-                                <!--Content="{Binding ElementName=t0, Path=(Validation.Errors)[0].ErrorContent}"></Label>-->
-                                <Label Margin="2" 
+                    <!--Content="{Binding ElementName=t0, Path=(Validation.Errors)[0].ErrorContent}"></Label>-->
+                    <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorT1Style}"></Label>
-                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="60" HorizontalAlignment="Left" >
-                                    <DockPanel Margin="2">
-                                        <Label Content="GridSpace: "></Label>
-                                        <TextBox Name="GridSpaceText" 
+                        <DockPanel Margin="2">
+                            <Label Content="GridSpace: "></Label>
+                            <TextBox Name="GridSpaceText" 
                                  MinWidth="50">
-                                            <TextBox.Text>
-                                                <Binding Source="{StaticResource InverseProblem1}"
+                                <TextBox.Text>
+                                    <Binding Source="{StaticResource InverseProblem}"
                                          Path="GridSpacing">
-                                                    <Binding.ValidationRules>
-                                                        <DataErrorValidationRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
-                                    </DockPanel>
-                                </Border>
-                                <Label Name="GridSpaceErrorLabel" 
+                        </DockPanel>
+                    </Border>
+                    <Label Name="GridSpaceErrorLabel" 
                        Margin="2"
                        Foreground="Red"
                        Style = "{StaticResource ErrorGridSpaceStyle}"></Label>
-                                <!--Content="{Binding ElementName=GridSpaceText, Path=(Validation.Errors)[0].ErrorContent}"-->
+                    <!--Content="{Binding ElementName=GridSpaceText, Path=(Validation.Errors)[0].ErrorContent}"-->
 
-                            </StackPanel>
-                        </ScrollViewer>
-                        <Button Grid.Row="1" Content="Count" Margin="12" HorizontalAlignment="Center"
+                </StackPanel>
+            </ScrollViewer>
+            <Button Grid.Row="1" Content="Count" Margin="12" HorizontalAlignment="Center"
                     Name="CountButton" Click="CountButton_Click"></Button>
-                    </Grid>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="InverseProblem2">
-            <TabItem.Header>
-                <TextBlock Margin="3">InverseProblem2</TextBlock>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-    </TabControl>
+        </Grid>
+    </Grid>
 </Window>

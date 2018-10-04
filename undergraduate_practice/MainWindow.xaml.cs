@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using InverseProblem;
+using Problem;
 
 namespace undergraduate_practice
 {
@@ -79,7 +79,7 @@ namespace undergraduate_practice
 
         private void CountButton_Click(object sender, RoutedEventArgs e)
         {
-            var task = (InverseProblem1)this.FindResource("InverseProblem1");
+            var task = (InverseProblem)this.FindResource("InverseProblem1");
             //task.PhiInpit = PhiX.Text;
             //task.PsiInpit = PsiX.Text;
             //task.FInpit = FX.Text;
@@ -91,7 +91,7 @@ namespace undergraduate_practice
             //task.GridSpacing = double.Parse(GridSpace.Text);
             if (CheckForErrors() == false)
             {
-                MessageBox.Show("Solving");
+                //MessageBox.Show("Solving");
                 List<double> g;
                 double[] t;
                 task.Solve(out g, out t);

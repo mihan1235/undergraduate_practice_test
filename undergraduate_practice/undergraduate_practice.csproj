@@ -103,9 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InverseProblem\InverseProblem.csproj">
+    <ProjectReference Include="..\InverseProblem\Problem.csproj">
       <Project>{55cfed09-8ce8-4ba6-aa79-62cdb9996c79}</Project>
-      <Name>InverseProblem</Name>
+      <Name>Problem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

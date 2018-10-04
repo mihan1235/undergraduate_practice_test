@@ -9,9 +9,9 @@ using static math_lib.Derivative;
 using static math_lib.Int;
 using System.ComponentModel;
 
-namespace InverseProblem
+namespace Problem
 {
-    public class InverseProblem1: IDataErrorInfo
+    public class InverseProblem: IDataErrorInfo
     {
         public string Error { get { return "Error Text"; } }
         public string this[string property]
@@ -59,56 +59,56 @@ namespace InverseProblem
                             add_msg("Grid spacing must be greater then 0");
                         }
                         break;
-                    case "PhiInpit":
-                        if (PhiInpit == null)
+                    case "F1Inpit":
+                        if (F1Inpit == null)
                         {
-                            add_msg("Phi input must not be empty");
+                            add_msg("f1(x) input must not be empty");
                             break;
                         }
 
-                        if (PhiX.IsError)
+                        if (F1X.IsError)
                         {
-                            add_msg(PhiX.LexerErrorMsg);
-                            add_msg(PhiX.SyntaxErrorMsg);
+                            add_msg(F1X.LexerErrorMsg);
+                            add_msg(F1X.SyntaxErrorMsg);
                         }
                         break;
-                    case "PsiInpit":
-                        if (PsiInpit == null)
+                    case "F2Inpit":
+                        if (F2Inpit == null)
                         {
-                            add_msg("Psi input must not be empty");
+                            add_msg("f2(x) input must not be empty");
                             break;
                         }
 
-                        if (PsiX.IsError)
+                        if (F2X.IsError)
                         {
-                            add_msg(PsiX.LexerErrorMsg);
-                            add_msg(PsiX.SyntaxErrorMsg);
+                            add_msg(F2X.LexerErrorMsg);
+                            add_msg(F2X.SyntaxErrorMsg);
                         }
                         break;
-                    case "FInpit":
-                        if (FInpit == null)
+                    case "P1Inpit":
+                        if (P1Inpit == null)
                         {
-                            add_msg("f(x) input must not be empty");
+                            add_msg("p1(t) input must not be empty");
                             break;
                         }
 
-                        if (FX.IsError)
+                        if (P1T.IsError)
                         {
-                            add_msg(FX.LexerErrorMsg);
-                            add_msg(FX.SyntaxErrorMsg);
+                            add_msg(P1T.LexerErrorMsg);
+                            add_msg(P1T.SyntaxErrorMsg);
                         }
                         break;
-                    case "PInpit":
-                        if (PInpit == null)
+                    case "P2Inpit":
+                        if (P2Inpit == null)
                         {
-                            add_msg("p(t) input must not be empty");
+                            add_msg("p2(t) input must not be empty");
                             break;
                         }
 
-                        if (PT.IsError)
+                        if (P2T.IsError)
                         {
-                            add_msg(PT.LexerErrorMsg);
-                            add_msg(PT.SyntaxErrorMsg);
+                            add_msg(P2T.LexerErrorMsg);
+                            add_msg(P2T.SyntaxErrorMsg);
                         }
                         break;
                     default:
@@ -128,7 +128,7 @@ namespace InverseProblem
             set
             {
                 h = value;
-                volter_int.GridSpacing = h;
+                task.GridSpacing = h;
             }
         }
 
@@ -144,7 +144,7 @@ namespace InverseProblem
             set
             {
                 t0 = value;
-                volter_int.SetTimeRange(t0, t1);                
+                task.SetTimeRange(t0, t1);                
             }
         }
 
@@ -157,11 +157,17 @@ namespace InverseProblem
             set
             {
                 t1 = value;
-                volter_int.SetTimeRange(t0, t1);                
+                task.SetTimeRange(t0, t1);                
             }
         }
 
-        public double X0
+        public double X1
+        {
+            get;
+            set;
+        }
+
+        public double X2
         {
             get;
             set;
@@ -173,107 +179,92 @@ namespace InverseProblem
             set;
         }
 
-        FunctionGrammar FX = new FunctionGrammar();
-        FunctionGrammar PhiX = new FunctionGrammar();
-        FunctionGrammar PsiX = new FunctionGrammar();
+        FunctionGrammar F1X = new FunctionGrammar();
 
-        public string FInpit
+        public string F1Inpit
         {
             get
             {
-                return FX.Input;
+                return F1X.Input;
             }
             set
             {
-                FX.Input = value;
+                F1X.Input = value;
             }
         }
 
-        public double F(double x)
+        public double F1(double x)
         {
-            return FX.Func(x);
+            return F1X.Func(x);
         }
 
-        public string PhiInpit
+        FunctionGrammar F2X = new FunctionGrammar();
+
+        public string F2Inpit
         {
             get
             {
-                return PhiX.Input;
+                return F2X.Input;
             }
             set
             {
-                PhiX.Input = value;
+                F2X.Input = value;
             }
         }
 
-        public double Phi(double x)
+        public double F2(double x)
         {
-            return PhiX.Func(x);
+            return F2X.Func(x);
         }
 
-        public string PsiInpit
+        FunctionGrammar P1T = new FunctionGrammar();
+
+        public string P1Inpit
         {
             get
             {
-                return PsiX.Input;
+                return P1T.Input;
             }
             set
             {
-                PsiX.Input = value;
+                P1T.Input = value;
             }
         }
 
-        public double Psi(double x)
+        public double P1(double t)
         {
-            return PsiX.Func(x);
+            return P1T.Func(t);
         }
 
-        FunctionGrammar PT = new FunctionGrammar();
+        FunctionGrammar P2T = new FunctionGrammar();
 
-        public string PInpit
+        public string P2Inpit
         {
             get
             {
-                return PT.Input;
+                return P2T.Input;
             }
             set
             {
-                PT.Input = value;
+                P2T.Input = value;
             }
         }
 
-        public double P(double t)
+        public double P2(double t)
         {
-            return PT.Func(t);
+            return P2T.Func(t);
         }
 
-        //double p_1(double t)
+        Volter2System task = new Volter2System();
+
+        //public void Solve(out List<double> g, out double[] t_arr)
         //{
-        //    double ans = P(t) - (Phi(X0 + A * t) + Phi(X0 - A * t)) / 2;
-        //    ans -= 1 / (2 * A) * Integrate(Psi,X0 - A*t, X0 + A*t, h * h / 2);
-        //    return ans;
+        //    //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
+        //    volter_int.F = (t) => p_2(t) / F(X0);
+        //    volter_int.Lambda = 1 / 2 * F(X0);
+        //    volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
+        //                   - FirstDerivative(F, X0 - A * (t - tau), h) * A;
+        //    volter_int.Solve(out g, out t_arr);
         //}
-
-        VolterII volter_int = new VolterII();
-
-        double p_2(double t)
-        {
-            double ans = SecondDerivative(P, t, h);
-            ans -= (SecondDerivative(Phi, X0 + A * t,h)*Math.Pow(A,2)
-                + Math.Pow(A, 2)* SecondDerivative(Phi, X0 - A * t, h)) / 2;
-            ans -= 1 / (2 * A) * (FirstDerivative(Psi,X0+A*t,h) * Math.Pow(A, 2)
-                - Math.Pow(A, 2) * FirstDerivative(Psi, X0 - A * t, h));
-            return ans;
-        }
-
-        public void Solve(out List<double> g, out double[] t_arr)
-        {
-            //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
-            volter_int.F = (t) => p_2(t) / F(X0);
-            volter_int.Lambda = 1 / 2 * F(X0);
-            volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
-                           - FirstDerivative(F, X0 - A * (t - tau), h) * A;
-            volter_int.Solve(out g, out t_arr);
-        }
     }        
 }

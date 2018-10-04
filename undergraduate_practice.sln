@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "undergraduate_practice", "u
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grammar", "Grammar\Grammar.csproj", "{D2923984-59C7-43D6-8009-33442F87BDC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InverseProblem", "InverseProblem\InverseProblem.csproj", "{55CFED09-8CE8-4BA6-AA79-62CDB9996C79}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Problem", "InverseProblem\Problem.csproj", "{55CFED09-8CE8-4BA6-AA79-62CDB9996C79}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BuildGrammar", "BuildGrammar\BuildGrammar.vcxproj", "{0B0AEE05-B6C7-46E1-9B81-2B635E75F5AF}"
 EndProject
