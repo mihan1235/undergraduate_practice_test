@@ -259,22 +259,7 @@ namespace Problem
 
         public void Solve(out List<double> g1, out List<double> g2, out double[] t_arr)
         {
-            //    //volter_int.F = (t) => SecondDerivative(p_1,t,h) / F(X0);
-            //    volter_int.F = (t) => p_2(t) / F(X0);
-            //    volter_int.Lambda = 1 / 2 * F(X0);
-            //    volter_int.K = (t, tau) => FirstDerivative(F,X0 + A *(t - tau),h) * A
-            //                   - FirstDerivative(F, X0 - A * (t - tau), h) * A;
-            //    volter_int.Solve(out g, out t_arr);
-            double q1(double t)
-            {
-                return SecondDerivative(P2,t,h) - F2(X2)/F2(X1) * SecondDerivative(P1,t,h);
-            }
-
-            double C1()
-            {
-                return F1(X2) - F2(X2) / F2(X1) * F1(X1);
-            }
-            
+          
             double A(double x, double t, double tau)
             {
                 return SecondDerivative(F1, x + this.A * (t - tau), h) - SecondDerivative(F1, x - this.A *
@@ -287,45 +272,40 @@ namespace Problem
                     (t - tau), h);
             }
 
-            double C2()
+            double Delta()
             {
-                return F2(X1) - F2(X2) / F1(X2) * F1(X1);
-            }
-
-            double q2(double t)
-            {
-                return SecondDerivative(P1, t, h) - F1(X1) / F1(X2) * SecondDerivative(P2, t, h);
+                return F1(X1) * F2(X2) - F1(X2) * F2(X1);
             }
 
             task.Phi1 = (t) =>
             {
-                return q1(t) / C1();
+                return (SecondDerivative(P1,t,h)*F2(X2)-SecondDerivative(P2,t,h)*F2(X1))/Delta();
             };
 
 
             task.K11 = (t, tau) =>
             {
-                return this.A / (2 * C1()) * (A(X1,t,tau)*F2(X2)/F2(X1)-A(X2,t,tau));
+                return -this.A / (2 * Delta()) * (F2(X2) * A(X1, t, tau) - F2(X1) * A(X2, t, tau));
             };
 
             task.K12 = (t, tau) =>
             {
-                return this.A / (2 * C1()) * (B(X1, t, tau) * F2(X2) / F2(X1) - B(X2, t, tau));
+                return -this.A / (2 * Delta()) * (F2(X2)*B(X1,t,tau)-F2(X1)*B(X2,t,tau));
             };
 
             task.Phi2 = (t) =>
             {
-                return q2(t) / C2();
+                return (SecondDerivative(P1,t,h)*F1(X2)-SecondDerivative(P2,t,h)*F1(X1))/-Delta();
             };
 
             task.K21 = (t, tau) =>
             {
-                return this.A / (2 * C2()) * (A(X2, t, tau) * F1(X1) / F1(X2) - A(X1, t, tau));
+                return -this.A / (2 * -Delta()) * (A(X1,t,tau)*F1(X2)-A(X2,t,tau)*F1(X1));
             };
 
             task.K22 = (t, tau) =>
             {
-                return this.A / (2 * C2()) * (B(X2, t, tau) * F1(X1) / F1(X2) - B(X1, t, tau));
+                return -this.A / (2 * -Delta()) * (B(X1,t,tau)*F1(X2)-B(X2,t,tau)*F1(X1));
             };
             task.Solve(out g1,out g2,out t_arr);
         }
