@@ -260,6 +260,29 @@ namespace Problem
         public void Solve(out List<double> g1, out List<double> g2, out double[] t_arr)
         {
           
+            ///////////////////////////////Debug///////////////////////////////////////////
+            
+            double F1(double x)
+            {
+                return x * x;
+            }
+
+            double F2(double x)
+            {
+                return x * x * x;
+            }
+
+            double P1(double t)
+            {
+                return t * t * t / 6 + t * t * t * t / 12;
+            }
+
+            double P2(double t)
+            {
+                return 2 / 3 * t * t * t + 2 / 3 * t * t * t * t;
+            }
+            ///////////////////////////////////////////////////////////////////////////////
+
             double A(double x, double t, double tau)
             {
                 return SecondDerivative(F1, x + this.A * (t - tau), h) - SecondDerivative(F1, x - this.A *

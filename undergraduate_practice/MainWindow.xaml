@@ -7,7 +7,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:lib="clr-namespace:Problem;assembly=Problem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
@@ -124,182 +124,236 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="200"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <oxy:PlotView Grid.Column="0"  Model="{Binding MyModel}"/>
-        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" 
+    <TabControl>
+        <TabItem>
+            <TabItem.Header>
+                InverseProblem
+            </TabItem.Header>
+            <TabItem.Content>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="200"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <oxy:PlotView Grid.Column="0"  Model="{Binding MyModel}"/>
+                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" 
                       HorizontalAlignment="Center" Width="5"></GridSplitter>
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <StackPanel Grid.Row="0" VerticalAlignment="Stretch" >
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                            <StackPanel Grid.Row="0" VerticalAlignment="Stretch" >
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2">
-                            <Label Content="f1(x):"></Label>
-                            <TextBox Name="F1X" MinWidth="200">
-                                <Binding Source="{StaticResource InverseProblem}"
+                                    <DockPanel Margin="2">
+                                        <Label Content="f1(x):"></Label>
+                                        <TextBox Name="F1X" MinWidth="200">
+                                            <Binding Source="{StaticResource InverseProblem}"
                                          Path="F1Inpit">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                                <Binding.ValidationRules>
+                                                    <DataErrorValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                            Style="{StaticResource ErrorF1XStyle}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2">
-                            <Label Content="f2(x):"></Label>
-                            <TextBox Name="F2X" MinWidth="200">
-                                <Binding Source="{StaticResource InverseProblem}"
+                                    <DockPanel Margin="2">
+                                        <Label Content="f2(x):"></Label>
+                                        <TextBox Name="F2X" MinWidth="200">
+                                            <Binding Source="{StaticResource InverseProblem}"
                                          Path="F2Inpit">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                                <Binding.ValidationRules>
+                                                    <DataErrorValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                            Style="{StaticResource ErrorF2XStyle}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2">
-                            <Label Content="U(x_1,t) = p1(t):"></Label>
-                            <TextBox Name="P1T" MinWidth="200">
-                                <Binding Source="{StaticResource InverseProblem}"
+                                    <DockPanel Margin="2">
+                                        <Label Content="U(x_1,t) = p1(t):"></Label>
+                                        <TextBox Name="P1T" MinWidth="200">
+                                            <Binding Source="{StaticResource InverseProblem}"
                                          Path="P1Inpit">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                                <Binding.ValidationRules>
+                                                    <DataErrorValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                            Style="{StaticResource ErrorP1TStyle}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="200" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2">
-                            <Label Content="U(x_2,t) = p2(t):"></Label>
-                            <TextBox Name="P2T" MinWidth="200">
-                                <Binding Source="{StaticResource InverseProblem}"
+                                    <DockPanel Margin="2">
+                                        <Label Content="U(x_2,t) = p2(t):"></Label>
+                                        <TextBox Name="P2T" MinWidth="200">
+                                            <Binding Source="{StaticResource InverseProblem}"
                                          Path="P2Inpit">
-                                    <Binding.ValidationRules>
-                                        <DataErrorValidationRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                                <Binding.ValidationRules>
+                                                    <DataErrorValidationRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                            Style="{StaticResource ErrorP2TStyle}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
-                        <DockPanel Margin="2" >
-                            <Label Content="x_1:"></Label>
-                            <TextBox Name ="x1" MinWidth="30"
+                                    <DockPanel Margin="2" >
+                                        <Label Content="x_1:"></Label>
+                                        <TextBox Name ="x1" MinWidth="30"
                                  Text="{Binding Source={StaticResource InverseProblem},Path=X1}"></TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                        Style="{StaticResource ErrorX1Style}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
-                        <DockPanel Margin="2" >
-                            <Label Content="x_2:"></Label>
-                            <TextBox Name ="x2" MinWidth="30"
+                                    <DockPanel Margin="2" >
+                                        <Label Content="x_2:"></Label>
+                                        <TextBox Name ="x2" MinWidth="30"
                                  Text="{Binding Source={StaticResource InverseProblem},Path=X2}"></TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" Foreground="Red"
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" Foreground="Red"
                        Style="{StaticResource ErrorX2Style}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="40" HorizontalAlignment="Left">
-                        <DockPanel Margin="2" >
-                            <Label Content="a:"></Label>
-                            <TextBox Name ="a" MinWidth="30"
+                                    <DockPanel Margin="2" >
+                                        <Label Content="a:"></Label>
+                                        <TextBox Name ="a" MinWidth="30"
                                  Text="{Binding Source={StaticResource InverseProblem},Path=A}"></TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" 
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorAStyle}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="100" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2" Name="DockPanelTime">
-                            <Label Content="t: from"></Label>
-                            <TextBox Name="t0" MinWidth="50">
-                                <TextBox.Text>
-                                    <Binding Source="{StaticResource InverseProblem}"
+                                    <DockPanel Margin="2" Name="DockPanelTime">
+                                        <Label Content="t: from"></Label>
+                                        <TextBox Name="t0" MinWidth="50">
+                                            <TextBox.Text>
+                                                <Binding Source="{StaticResource InverseProblem}"
                                          Path="T0">
-                                        <Binding.ValidationRules>
-                                            <DataErrorValidationRule />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <Label Content="t: to"></Label>
-                            <TextBox Name="t1" MinWidth="50">
-                                <TextBox.Text>
-                                    <Binding Source="{StaticResource InverseProblem}"
+                                                    <Binding.ValidationRules>
+                                                        <DataErrorValidationRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                        <Label Content="t: to"></Label>
+                                        <TextBox Name="t1" MinWidth="50">
+                                            <TextBox.Text>
+                                                <Binding Source="{StaticResource InverseProblem}"
                                          Path="T1">
-                                        <Binding.ValidationRules>
-                                            <DataErrorValidationRule />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </DockPanel>
-                    </Border>
-                    <Label Margin="2" 
+                                                    <Binding.ValidationRules>
+                                                        <DataErrorValidationRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Border>
+                                <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorT0Style}"></Label>
-                    <!--Content="{Binding ElementName=t0, Path=(Validation.Errors)[0].ErrorContent}"></Label>-->
-                    <Label Margin="2" 
+                                <!--Content="{Binding ElementName=t0, Path=(Validation.Errors)[0].ErrorContent}"></Label>-->
+                                <Label Margin="2" 
                        Foreground="Red"
                        Style="{StaticResource ErrorT1Style}"></Label>
-                    <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
+                                <Border Margin="12,8" BorderThickness="1" BorderBrush="SteelBlue" 
                     CornerRadius="4" MinWidth="60" HorizontalAlignment="Left" >
-                        <DockPanel Margin="2">
-                            <Label Content="GridSpace: "></Label>
-                            <TextBox Name="GridSpaceText" 
+                                    <DockPanel Margin="2">
+                                        <Label Content="GridSpace: "></Label>
+                                        <TextBox Name="GridSpaceText" 
                                  MinWidth="50">
-                                <TextBox.Text>
-                                    <Binding Source="{StaticResource InverseProblem}"
+                                            <TextBox.Text>
+                                                <Binding Source="{StaticResource InverseProblem}"
                                          Path="GridSpacing">
-                                        <Binding.ValidationRules>
-                                            <DataErrorValidationRule />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                                                    <Binding.ValidationRules>
+                                                        <DataErrorValidationRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
 
-                        </DockPanel>
-                    </Border>
-                    <Label Name="GridSpaceErrorLabel" 
+                                    </DockPanel>
+                                </Border>
+                                <Label Name="GridSpaceErrorLabel" 
                        Margin="2"
                        Foreground="Red"
                        Style = "{StaticResource ErrorGridSpaceStyle}"></Label>
-                    <!--Content="{Binding ElementName=GridSpaceText, Path=(Validation.Errors)[0].ErrorContent}"-->
+                                <!--Content="{Binding ElementName=GridSpaceText, Path=(Validation.Errors)[0].ErrorContent}"-->
 
-                </StackPanel>
-            </ScrollViewer>
-            <Button Grid.Row="1" Content="Count" Margin="12" HorizontalAlignment="Center"
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Button Grid.Row="1" Content="Count" Margin="12" HorizontalAlignment="Center"
                     Name="CountButton" Click="CountButton_Click"></Button>
-        </Grid>
-    </Grid>
+                    </Grid>
+                </Grid>
+
+            </TabItem.Content>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                Debug
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="t:"
+                               HorizontalAlignment="Center"></Label>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                  Grid.Row="1">
+                        <ListBox Name="t_array"></ListBox>
+                    </ScrollViewer>
+                    <Label Content="g1(t):"
+                           HorizontalAlignment="Center"
+                           Grid.Column="1"></Label>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                  Grid.Row="1"
+                                  Grid.Column="1">
+                        <ListBox Name="g1_array"></ListBox>
+                    </ScrollViewer>
+                    <Label Content="g2(t):"
+                               HorizontalAlignment="Center"
+                           Grid.Column="2"></Label>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                  Grid.Row="1"
+                                  Grid.Column="2">
+                        <ListBox Name="g2_array"></ListBox>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+    </TabControl>
 </Window>
