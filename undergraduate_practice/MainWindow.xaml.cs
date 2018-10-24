@@ -89,11 +89,11 @@ namespace undergraduate_practice
             if (CheckForErrors() == false)
             {
                 //    //MessageBox.Show("Solving");
-                double[] t;
-                task.Solve(out List<double> g1, out List<double> g2, out t);
+                double[] t_arr;
+                task.Solve(out List<double> g1, out List<double> g2, out t_arr);
                 var Model = (MainViewModel)this.DataContext;
-                Model.UpdateModel(g1,g2, t);
-                t_array.ItemsSource = t;
+                Model.UpdateModel(g1,g2, t_arr,task.T0,task.T1,task.GridSpacing);
+                t_array.ItemsSource = t_arr;
                 g1_array.ItemsSource = g1;
                 g2_array.ItemsSource = g2;
             }
