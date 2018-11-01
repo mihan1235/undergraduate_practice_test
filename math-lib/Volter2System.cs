@@ -138,14 +138,14 @@ namespace math_lib
             {
                 double sum_11 = 0;
 
-                for (int k = 0; k < i - 1; k = k + 1)
+                for (int k = 0; k <= i - 1; k = k + 1)
                 {
                     sum_11 += K11(t[i], t[k]) * g_1.ElementAt(k) * h;
                 }
 
                 double sum_12 = 0;
 
-                for (int k = 0; k < i - 1; k++)
+                for (int k = 0; k <= i - 1; k++)
                 {
                     sum_12 += K12(t[i], t[k]) * g_2.ElementAt(k) * h;
                 }
@@ -154,14 +154,14 @@ namespace math_lib
 
                 double sum_21 = 0;
 
-                for (int k = 0; k < i - 1; k++)
+                for (int k = 0; k <= i - 1; k++)
                 {
                     sum_21 += K21(t[i], t[k]) * g_1.ElementAt(k) * h;
                 }
 
                 double sum_22 = 0;
 
-                for (int k = 0; k < i - 1; k++)
+                for (int k = 0; k <= i - 1; k++)
                 {
                     sum_22 += K22(t[i], t[k]) * g_2.ElementAt(k) * h;
                 }
@@ -170,15 +170,103 @@ namespace math_lib
             }
         }
 
+
+
         public void Solve_2(out List<double> g_1, out List<double> g_2, out double[] t)
         {
             t = Make_t_Array();
             g_1 = new List<double>();
             g_2 = new List<double>();
 
-            
-        }
+            double C(int i, ref double[] t_arr)
+            {
+                return 1 - 1 / 2 * K11(t_arr[i], t_arr[i]) * h;
+            }
 
+            double D(int i, ref double[] t_arr)
+            {
+                return -1 / 2 * K12(t_arr[i], t_arr[i]) * h;
+            }
+
+            double E(int i, ref double[] t_arr)
+            {
+                return 1 - 1 / 2 * K22(t_arr[i], t_arr[i]) * h;
+            }
+
+            double F(int i, ref double[] t_arr)
+            {
+                return -1 / 2 * K21(t_arr[i], t_arr[i]) * h;
+            }
+
+            double R1i(int i, ref List<double> g1, ref double[] t_arr)
+            {
+                double sum = 0;
+                for (int k = 0; k <= i - 2; k++)
+                {
+                    sum += (K11(t_arr[i], t_arr[k]) * g1.ElementAt(k) + K11(t_arr[i], t_arr[k + 1]) * g1.ElementAt(k + 1))*h / 2 +
+                        Phi1(t_arr[i]);
+                }
+                return sum;
+            }
+
+            double R2i(int i, ref List<double> g2, ref double[] t_arr)
+            {
+                double sum = 0;
+                for (int k = 0; k <= i - 2; k++)
+                {
+                    sum += (K22(t_arr[i], t_arr[k]) * g2.ElementAt(k) + K22(t_arr[i], t_arr[k + 1]) * g2.ElementAt(k + 1)) * h / 2 +
+                        Phi2(t_arr[i]);
+                }
+                return sum;
+            }
+
+            double Bi1(int i, ref List<double> g2, ref double[] t_arr)
+            {
+                double sum = 0;
+                for (int k = 0; k <= i - 2; k++)
+                {
+                    sum += (K12(t_arr[i],t_arr[k])*g2.ElementAt(k)+K12(t_arr[i],t_arr[k+1])*g2.ElementAt(k+1))*h/2;
+                }
+                return sum;
+            }
+
+            double Bi2(int i, ref List<double> g1, ref double[] t_arr)
+            {
+                double sum = 0;
+                for (int k = 0; k <= i - 2; k++)
+                {
+                    sum += (K21(t_arr[i],t_arr[k])*g1.ElementAt(k)+K21(t_arr[i],t_arr[k+1])*g1.ElementAt(k+1))*h/2;
+                }
+                return sum;
+            }
+
+            double G1(int i, ref List<double> g1, ref List<double> g2, ref double[] t_arr)
+            {
+                return 1 / 2 * K11(t_arr[i], t_arr[i - 1]) * g1.ElementAt(i - 1) * h +
+                    1 / 2 * K12(t_arr[i], t_arr[i - 1]) * g2.ElementAt(i - 1) * h +
+                    Bi1(i,ref g2,ref t_arr) + R1i(i,ref g1,ref t_arr);
+            }
+
+            double G2(int i, ref List<double> g1, ref List<double> g2, ref double[] t_arr)
+            {
+                return 1 / 2 * K22(t_arr[i], t_arr[i - 1]) * g2.ElementAt(i - 1) * h +
+                       1 / 2 * K21(t_arr[i], t_arr[i - 1]) * g1.ElementAt(i - 1) * h +
+                       Bi2(i,ref g1,ref t_arr) + R2i(i,ref g2,ref t_arr);
+
+            }
+
+            g_1.Add(1/(C(0, ref t) *E(0, ref t) -F(0, ref t) *D(0, ref t))*
+                (Phi1(t[0])*E(0, ref t) - Phi2(t[0])* D(0, ref t)));
+            g_2.Add(1/(D(0, ref t) *F(0, ref t) -E(0, ref t) *C(0, ref t))*
+                (Phi1(t[0]) * F(0, ref t) - Phi2(t[0]) * C(0, ref t)));
+            for (int i = 1; i < num; i = i + 1)
+            {
+                g_1.Add((G1(i,ref g_1,ref g_2,ref t)*E(i,ref t)-G2(i, ref g_1, ref g_2, ref t) *D(i, ref t))/
+                    (C(i, ref t) *E(i, ref t) -F(i, ref t) *D(i, ref t)));
+                g_2.Add((G1(i, ref g_1, ref g_2, ref t) *F(i, ref t) -G2(i, ref g_1, ref g_2, ref t) *C(i, ref t))/
+                    (D(i, ref t) *F(i, ref t) -E(i, ref t) *C(i, ref t)));
+            }
+        }
 
 
         public void Solve_3(out List<double> g_1, out List<double> g_2, out double[] t)
@@ -189,17 +277,18 @@ namespace math_lib
 
             for (int i = 0; i < num; i = i + 1)
             {
-                
+
                 ///////////////////////////////////////////
                 ///Count g_1
-                double g_1_old_result; 
-                double g_2_old_result; 
+                double g_1_old_result;
+                double g_2_old_result;
                 double g_1_result = Phi1(t[i]);
                 double g_2_result = Phi2(t[i]);
                 double t_i = t[i];
                 double g1_bias;
                 double g2_bias;
-                do {
+                do
+                {
                     g_1_old_result = g_1_result;
                     g_2_old_result = g_2_result;
                     g_1_result = Int.Integrate((tau) =>
@@ -219,7 +308,7 @@ namespace math_lib
                     g1_bias = Math.Abs(g_1_result - g_1_old_result);
                     g2_bias = Math.Abs(g_2_result - g_2_old_result);
                 } while ((g1_bias > h) || (g2_bias > h));
-               
+
                 g_1.Add(g_1_result);
                 g_2.Add(g_2_result);
             }
