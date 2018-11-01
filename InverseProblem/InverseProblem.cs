@@ -8,9 +8,17 @@ using math_lib;
 using static math_lib.Derivative;
 using static math_lib.Int;
 using System.ComponentModel;
+using static System.Math;
 
 namespace Problem
 {
+    public enum Mode
+    {
+        RiemannSum,
+        TrapezoidalRule,
+        IterativeRule,
+    }
+
     public class InverseProblem : IDataErrorInfo
     {
         public string Error { get { return "Error Text"; } }
@@ -257,80 +265,58 @@ namespace Problem
 
         Volter2System task = new Volter2System();
 
-        public void Solve(out List<double> g1, out List<double> g2, out double[] t_arr)
+        public void Solve(out List<double> g1, out List<double> g2, out double[] t_arr, Mode m)
         {
           
-            ///////////////////////////////Debug///////////////////////////////////////////
-            
-            double F1(double x)
-            {
-                return x * x;
-            }
-
-            double F2(double x)
-            {
-                return x * x * x;
-            }
-
-            double P1(double t)
-            {
-                return t * t * t / 6 + t * t * t * t / 12;
-            }
-
-            double P2(double t)
-            {
-                return 2 / 3 * t * t * t + 2 / 3 * t * t * t * t;
-            }
-            ///////////////////////////////////////////////////////////////////////////////
-
-            double A(double x, double t, double tau)
-            {
-                return SecondDerivative(F1, x + this.A * (t - tau), h) - SecondDerivative(F1, x - this.A *
-                    (t - tau), h);
-            }
-
-            double B(double x, double t, double tau)
-            {
-                return SecondDerivative(F2, x + this.A * (t - tau), h) - SecondDerivative(F2, x - this.A *
-                    (t - tau), h);
-            }
-
-            double Delta()
-            {
-                return F1(X1) * F2(X2) - F1(X2) * F2(X1);
-            }
-
             task.Phi1 = (t) =>
             {
-                return (SecondDerivative(P1,t,h)*F2(X2)-SecondDerivative(P2,t,h)*F2(X1))/Delta();
+                return -Pow(t,3)/6-Pow(t,2)/2;
             };
 
 
             task.K11 = (t, tau) =>
             {
-                return -this.A / (2 * Delta()) * (F2(X2) * A(X1, t, tau) - F2(X1) * A(X2, t, tau));
+                return t-tau;
             };
 
             task.K12 = (t, tau) =>
             {
-                return -this.A / (2 * Delta()) * (F2(X2)*B(X1,t,tau)-F2(X1)*B(X2,t,tau));
+                return 1;
             };
 
             task.Phi2 = (t) =>
             {
-                return (SecondDerivative(P1,t,h)*F1(X2)-SecondDerivative(P2,t,h)*F1(X1))/-Delta();
+                //return t+1-5/3*Pow(t,3)-3/2*Pow(t,2);
+                return -13 / 6 * Pow(t, 3) - Pow(t, 2) + t + 1;
             };
 
             task.K21 = (t, tau) =>
             {
-                return -this.A / (2 * -Delta()) * (A(X1,t,tau)*F1(X2)-A(X2,t,tau)*F1(X1));
+                return 2*(t+tau);
             };
 
             task.K22 = (t, tau) =>
             {
-                return -this.A / (2 * -Delta()) * (B(X1,t,tau)*F1(X2)-B(X2,t,tau)*F1(X1));
+                return t;
             };
-            task.Solve(out g1,out g2,out t_arr);
+
+            switch (m)
+            {
+                case Mode.RiemannSum:
+                    task.Solve_1(out g1, out g2, out t_arr);
+                    break;
+                case Mode.TrapezoidalRule:
+                    task.Solve_2(out g1, out g2, out t_arr);
+                    break;
+                case Mode.IterativeRule:
+                    task.Solve_3(out g1, out g2, out t_arr);
+                    break;
+                default:
+                    g1 = new List<double>();
+                    g2 = new List<double>();
+                    t_arr = new double[0];
+                    break;
+            } 
         }
     }
 }

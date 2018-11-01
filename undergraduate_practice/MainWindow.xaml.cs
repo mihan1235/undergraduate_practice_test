@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Problem;
+using static Problem.Mode;
 
 namespace undergraduate_practice
 {
@@ -83,6 +84,8 @@ namespace undergraduate_practice
             return false;
         }
 
+        
+
         private void CountButton_Click(object sender, RoutedEventArgs e)
         {
             var task = (InverseProblem)this.FindResource("InverseProblem");
@@ -90,7 +93,20 @@ namespace undergraduate_practice
             {
                 //    //MessageBox.Show("Solving");
                 double[] t_arr;
-                task.Solve(out List<double> g1, out List<double> g2, out t_arr);
+                Mode m = Mode.RiemannSum;
+                if (radio_button_1.IsChecked == true)
+                {
+                    m = Mode.RiemannSum;
+                }
+                if (radio_button_2.IsChecked == true)
+                {
+                    m = Mode.TrapezoidalRule;
+                }
+                if (radio_button_3.IsChecked == true)
+                {
+                    m =Mode.IterativeRule;
+                }
+                task.Solve(out List<double> g1, out List<double> g2, out t_arr,m );
                 var Model = (MainViewModel)this.DataContext;
                 Model.UpdateModel(g1,g2, t_arr,task.T0,task.T1,task.GridSpacing);
                 t_array.ItemsSource = t_arr;

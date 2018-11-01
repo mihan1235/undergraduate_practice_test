@@ -18,7 +18,7 @@ namespace undergraduate_practice
         void AddLineSeries(List<double> func_arr, string func_title, double[] t)
         {
             LineSeries LineSeries = new LineSeries();
-            for (int i = 0; i < func_arr.Count; i++)
+            for (int i = 0; i < func_arr.Count(); i++)
             {
                 LineSeries.Points.Add(new DataPoint(t[i], func_arr.ElementAt(i)));
             }

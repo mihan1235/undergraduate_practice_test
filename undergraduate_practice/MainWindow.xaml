@@ -305,8 +305,24 @@
 
                             </StackPanel>
                         </ScrollViewer>
-                        <Button Grid.Row="1" Content="Count" Margin="12" HorizontalAlignment="Center"
-                    Name="CountButton" Click="CountButton_Click"></Button>
+                        <DockPanel Grid.Row="1">
+                            <Button  Content="Count" Margin="12" HorizontalAlignment="Center"
+                                     Name="CountButton" Click="CountButton_Click"
+                                     DockPanel.Dock="Left"></Button>
+                            <StackPanel DockPanel.Dock="Right">
+                                <RadioButton GroupName="Numerical_method" 
+                                             Content="Метод прямоугольников" 
+                                             Name="radio_button_1"
+                                             IsChecked="True" />
+                                <RadioButton GroupName="Numerical_method" 
+                                             Content="Метод трапеций"
+                                             Name="radio_button_2"/>
+                                <RadioButton GroupName="Numerical_method" 
+                                             Content="Итерационный метод"
+                                             Name="radio_button_3"/>
+                            </StackPanel>
+                        </DockPanel>
+
                     </Grid>
                 </Grid>
 
