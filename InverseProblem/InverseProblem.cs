@@ -270,7 +270,7 @@ namespace Problem
           
             task.Phi1 = (t) =>
             {
-                return -Pow(t,3)/6-Pow(t,2)/2;
+                return -Pow(t,3.0f)/ 6.0f - Pow(t, 2.0f) / 2.0f;
             };
 
 
@@ -281,18 +281,18 @@ namespace Problem
 
             task.K12 = (t, tau) =>
             {
-                return 1;
+                return 1.0f;
             };
 
             task.Phi2 = (t) =>
             {
                 //return t+1-5/3*Pow(t,3)-3/2*Pow(t,2);
-                return -13 / 6 * Pow(t, 3) - Pow(t, 2) + t + 1;
+                return -13.0f / 6.0f * Pow(t, 3.0f) - Pow(t, 2.0f) + t + 1.0f;
             };
 
             task.K21 = (t, tau) =>
             {
-                return 2*(t+tau);
+                return 2.0f * (t+tau);
             };
 
             task.K22 = (t, tau) =>
